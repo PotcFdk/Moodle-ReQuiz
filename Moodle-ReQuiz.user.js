@@ -36,65 +36,65 @@ function getQuestionDiv (id)
 
 function makeInvisible (objs)
 {
-    for (var i = 0; i < objs.length; i++)
-        objs [i].style.display = 'none';
+	for (var i = 0; i < objs.length; i++)
+		objs [i].style.display = 'none';
 }
 
 function unlockInputs (inputs)
 {
-    for (var i = 0; i < inputs.length; i++)
-    {
-        inputs [i].removeAttribute ('disabled');
-        inputs [i].removeAttribute ('checked');
-        inputs [i].removeAttribute ('readonly');
-        inputs [i].removeAttribute ('value');
-    }
+	for (var i = 0; i < inputs.length; i++)
+	{
+		inputs [i].removeAttribute ('disabled');
+		inputs [i].removeAttribute ('checked');
+		inputs [i].removeAttribute ('readonly');
+		inputs [i].removeAttribute ('value');
+	}
 }
 
 function resetCorrectnessClass (objs)
 {
-    for (var i = 0; i < objs.length; i++)
-    {
-        objs [i].className = objs [i].className.replace(/(?:^|\s)(in|partially)?correct(?!\S)/g , '');
-    }
+	for (var i = 0; i < objs.length; i++)
+	{
+		objs [i].className = objs [i].className.replace(/(?:^|\s)(in|partially)?correct(?!\S)/g , '');
+	}
 }
 
 function resetSelects (selects)
 {
-    for (var i = 0; i < selects.length; i++)
-    {
-        var select = selects [i];
-        select.removeAttribute ('disabled');
-        var options = select.getElementsByTagName ('option');
-        for (var j = 0; j < options.length; j++)
-        {
-            var option = options [j];
-            if (option)
-            {
-                if (j == 0)
-                    option.setAttribute ('selected', 'selected');
-                else
-                    option.removeAttribute ('selected');
-            }
-        }
-    }
+	for (var i = 0; i < selects.length; i++)
+	{
+		var select = selects [i];
+		select.removeAttribute ('disabled');
+		var options = select.getElementsByTagName ('option');
+		for (var j = 0; j < options.length; j++)
+		{
+			var option = options [j];
+			if (option)
+			{
+				if (j == 0)
+					option.setAttribute ('selected', 'selected');
+				else
+					option.removeAttribute ('selected');
+			}
+		}
+	}
 }
 
 function clearTable (obj)
 {
-    var tds = obj.getElementsByTagName ('td');
-    resetCorrectnessClass (tds);
-    
-    for (var tds_i = 0; tds_i < tds.length; tds_i++)
-    {
-        var td = tds [tds_i];
+	var tds = obj.getElementsByTagName ('td');
+	resetCorrectnessClass (tds);
+	
+	for (var tds_i = 0; tds_i < tds.length; tds_i++)
+	{
+		var td = tds [tds_i];
 
-        unlockInputs (td.getElementsByTagName ('input'));
-        resetCorrectnessClass (td.getElementsByTagName ('input'));
-        resetSelects (td.getElementsByTagName ('select'));
-        resetCorrectnessClass (td.getElementsByTagName ('select'));
-        makeInvisible (td.getElementsByClassName('questioncorrectnessicon'));
-    }
+		unlockInputs (td.getElementsByTagName ('input'));
+		resetCorrectnessClass (td.getElementsByTagName ('input'));
+		resetSelects (td.getElementsByTagName ('select'));
+		resetCorrectnessClass (td.getElementsByTagName ('select'));
+		makeInvisible (td.getElementsByClassName('questioncorrectnessicon'));
+	}
 }
 
 ///
@@ -107,62 +107,62 @@ for (var q = 1; ; q++)
 		console.log (q_div);
 		
 		var obj_answers = q_div.getElementsByClassName ('answer');
-        console.log(obj_answers);
-        for (var obj_answers_i = 0; obj_answers_i < obj_answers.length; obj_answers_i++)
-        {
-            var obj_answer = obj_answers [obj_answers_i]
+		console.log(obj_answers);
+		for (var obj_answers_i = 0; obj_answers_i < obj_answers.length; obj_answers_i++)
+		{
+			var obj_answer = obj_answers [obj_answers_i]
 
-            if (!obj_answer || !obj_answer.tagName) continue;
-            console.log ('Answer object is ' + obj_answer.tagName, obj_answer);
+			if (!obj_answer || !obj_answer.tagName) continue;
+			console.log ('Answer object is ' + obj_answer.tagName, obj_answer);
 
-            if (obj_answer.tagName.toLowerCase () == 'span') // single answer
-            {
-                var input_answer = obj_answer.getElementsByTagName ('input');
-                if (!input_answer || !input_answer[0]) continue;
-                unlockInputs (input_answer);
-                input_answer [0].className = '';
+			if (obj_answer.tagName.toLowerCase () == 'span') // single answer
+			{
+				var input_answer = obj_answer.getElementsByTagName ('input');
+				if (!input_answer || !input_answer[0]) continue;
+				unlockInputs (input_answer);
+				input_answer [0].className = '';
 
-                var img_answer = obj_answer.getElementsByTagName ('img');
-                if (!img_answer || !img_answer[0]) continue;
-                img_answer = img_answer[0];
-                img_answer.style.display = 'none';
-            }
-            else if (obj_answer.tagName.toLowerCase () == 'div') // multiple answers 1
-            {
-                var a_divs = obj_answer.getElementsByTagName ('div');
-                resetCorrectnessClass (a_divs);
+				var img_answer = obj_answer.getElementsByTagName ('img');
+				if (!img_answer || !img_answer[0]) continue;
+				img_answer = img_answer[0];
+				img_answer.style.display = 'none';
+			}
+			else if (obj_answer.tagName.toLowerCase () == 'div') // multiple answers 1
+			{
+				var a_divs = obj_answer.getElementsByTagName ('div');
+				resetCorrectnessClass (a_divs);
 
-                for (var i = 0; i < a_divs.length; i++)
-                {
-                    var a_div = a_divs [i];
+				for (var i = 0; i < a_divs.length; i++)
+				{
+					var a_div = a_divs [i];
 
-                    makeInvisible (a_div.getElementsByClassName('questioncorrectnessicon'));
-                    unlockInputs (a_div.getElementsByTagName ('input'));
-                    resetSelects (a_div.getElementsByTagName ('select'));
+					makeInvisible (a_div.getElementsByClassName('questioncorrectnessicon'));
+					unlockInputs (a_div.getElementsByTagName ('input'));
+					resetSelects (a_div.getElementsByTagName ('select'));
 
-                    // just in case
-                    clearTable (a_div);
-                }
-            }
-            else if (obj_answer.tagName.toLowerCase () == 'table') // multiple answers 2
-            {
-                clearTable (obj_answer);
-            }
-        }
-        
-        // check if we possibly missed something
-        if (q_div.getElementsByTagName ('select').length + q_div.getElementsByTagName ('input').length > 0)
-        {
-            console.log ('trying generic handler for ', q_div);
-            unlockInputs (q_div.getElementsByTagName ('input'));
-            resetCorrectnessClass (q_div.getElementsByTagName ('input'));
-            resetSelects (q_div.getElementsByTagName ('select'));
-            resetCorrectnessClass (q_div.getElementsByTagName ('select'));
-            makeInvisible (q_div.getElementsByClassName('questioncorrectnessicon'));
-            
-            // just in case
-            clearTable (q_div);
-        }
+					// just in case
+					clearTable (a_div);
+				}
+			}
+			else if (obj_answer.tagName.toLowerCase () == 'table') // multiple answers 2
+			{
+				clearTable (obj_answer);
+			}
+		}
+		
+		// check if we possibly missed something
+		if (q_div.getElementsByTagName ('select').length + q_div.getElementsByTagName ('input').length > 0)
+		{
+			console.log ('trying generic handler for ', q_div);
+			unlockInputs (q_div.getElementsByTagName ('input'));
+			resetCorrectnessClass (q_div.getElementsByTagName ('input'));
+			resetSelects (q_div.getElementsByTagName ('select'));
+			resetCorrectnessClass (q_div.getElementsByTagName ('select'));
+			makeInvisible (q_div.getElementsByClassName('questioncorrectnessicon'));
+			
+			// just in case
+			clearTable (q_div);
+		}
 	}
 	else
 		break;
